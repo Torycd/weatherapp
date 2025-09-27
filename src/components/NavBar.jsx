@@ -1,5 +1,7 @@
 import logo from "../assets/images/logo.svg";
 
+import Units from "./Units";
+
 function NavBar() {
   return (
     <div className="flex justify-between">
@@ -8,7 +10,9 @@ function NavBar() {
           <img src={logo} alt="logo" />
         </span>
       </div>
-      <div></div>
+      <div>
+        <Units />
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Main from "./components/Main";
 
 const App = () => {
   return (
-    <div className="px-8 py-4">
+    <div className="px-24 py-8 bg-neutral-800 min-h-dvh text-[18px] text-white">
       <NavBar />
       <Main />
     </div>
