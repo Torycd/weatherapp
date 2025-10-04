@@ -19,7 +19,7 @@ function reducer(state, action) {
   }
 }
 
-function useOpenMeteo() {
+function useOpenMeteo(coords) {
   const [{ status, data, error }, dispatch] = useReducer(reducer, initialValue);
 
   useEffect(() => {
@@ -28,14 +28,13 @@ function useOpenMeteo() {
     const handleFetch = async () => {
       try {
         const response = await fetch(
-          "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m"
+          `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&hourly=temperature_2m`
         );
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const data = await response.json();
+        console.log(data);
         dispatch({ type: "success", payload: data });
         console.log(data);
       } catch (err) {
@@ -44,7 +43,7 @@ function useOpenMeteo() {
     };
 
     handleFetch();
-  }, []);
+  }, [coords]);
 
   return { status, data, error };
 }
