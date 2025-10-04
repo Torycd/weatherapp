@@ -20,7 +20,7 @@ function reducer(state, action) {
 }
 
 function useGeo() {
-  const [state, dispatch] = useReducer(reducer, initialValue);
+  const [{status, results, error}, dispatch] = useReducer(reducer, initialValue);
 
   const searchCity = async (cityName) => {
     dispatch({ type: "start" });
