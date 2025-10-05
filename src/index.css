@@ -1,3 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "font", sans-serif;
+}
+@theme {
+  --font-sans: "DM Sans", sans-serif;
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --font-nunito: "Nunito Sans", sans-serif;
+}

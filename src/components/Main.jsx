@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-
 import useGeo from "../hooks/useGeo";
 import useOpenMeteo from "../hooks/useOpenMeteo";
 
+import SearchBar from "./SearchBar";
+import Forecast from "./Forecast";
+
 function Main() {
   const [coords, setCoords] = useState({ lat: 50.52, lon: 13.41 });
-  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [selected, setSelected] = useState(null);
 
+  // Detect location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCoords({
@@ -16,14 +21,48 @@ function Main() {
     });
   }, []);
 
+  // Debounce
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedQuery(query), 500);
+    return () => clearTimeout(handler);
+  }, [query]);
+
+  // Hooks
   const { data } = useOpenMeteo(coords);
-  const { status, results, error } = useGeo(search);
-  console.log(results);
+  const { status, results } = useGeo(debouncedQuery);
+
+  // When user selects
+  function handleSelect(r) {
+    setSelected(r);
+    if (r) setQuery(r.name);
+  }
+
+  // On Search button
+  function handleSearch() {
+    if (selected) {
+      setCoords({ lat: selected.latitude, lon: selected.longitude });
+    }
+  }
 
   return (
     <div>
+      <h1 className="text-6xl mt-5 font-bricolage text-center">
+        How is the sky looking today?
+      </h1>
+
+      <div className="flex justify-center mt-4">
+        <SearchBar
+          query={query}
+          setQuery={setQuery}
+          results={results}
+          status={status}
+          selected={selected}
+          onSelect={handleSelect}
+          onSearch={handleSearch}
+        />
+      </div>
       <div>
-        <h1 className="text-6xl text-center">How is the sky looking today?</h1>
+        <Forecast data={data} />
       </div>
     </div>
   );

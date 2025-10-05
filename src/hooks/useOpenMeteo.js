@@ -28,7 +28,7 @@ function useOpenMeteo(coords) {
     const handleFetch = async () => {
       try {
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&hourly=temperature_2m`
+          `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&hourly=temperature_2m&hourly=temperature_2m,relativehumidity_2m,precipitation,cloudcover,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&forecast_days=7&timezone=auto`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

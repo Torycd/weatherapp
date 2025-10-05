@@ -28,11 +28,11 @@ function useGeo(search) {
     const searchCity = async () => {
       dispatch({ type: "start" });
       try {
-        const res = await fetch(
+        const response = await fetch(
           `https://geocoding-api.open-meteo.com/v1/search?name=${search}&count=10&language=en&format=json`
         );
-        if (!res.ok) throw new Error("Failed to fetch locations");
-        const data = await res.json();
+        if (!response.ok) throw new Error("Failed to fetch locations");
+        const data = await response.json();
         //   console.log(data)
         dispatch({ type: "success", payload: data.results || [] });
       } catch (err) {
