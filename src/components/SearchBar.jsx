@@ -13,7 +13,7 @@ function SearchBar({
   return (
     <div className="flex gap-4 relative">
       {/* Input */}
-      <div className="bg-blue-900 rounded-md flex min-w-[400px] items-center px-3 opacity-75">
+      <div className="bg-blue-900 opacity-75 rounded-md flex min-w-[400px] items-center px-3 ">
         <SearchIcon className="w-6 h-6" />
         <input
           value={query}
