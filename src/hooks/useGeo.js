@@ -35,8 +35,8 @@ function useGeo(search) {
         const data = await response.json();
         //   console.log(data)
         dispatch({ type: "success", payload: data.results || [] });
-      } catch (err) {
-        dispatch({ type: "error", payload: err.message });
+      } catch (error) {
+        dispatch({ type: "error", payload: error.message });
       }
     };
     searchCity();

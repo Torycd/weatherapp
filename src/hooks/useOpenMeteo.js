@@ -36,7 +36,7 @@ function useOpenMeteo(coords) {
         const data = await response.json();
         console.log(data);
         dispatch({ type: "success", payload: data });
-        console.log(data);
+        // console.log(data);
       } catch (err) {
         dispatch({ type: "error", payload: err.message });
       }

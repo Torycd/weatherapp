@@ -25,8 +25,6 @@ function SearchBar({
           }}
         />
       </div>
-
-      {/* Button */}
       <button onClick={onSearch} className="bg-blue-800 rounded-md py-2 px-4">
         Search
       </button>
