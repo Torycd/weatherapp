@@ -23,7 +23,7 @@ function Forecast({ data }) {
         </div>
         <div>
           <span></span>
-          <h1></h1>
+          <h1>{hourly.temperature_2m}</h1>
         </div>
       </div>
       <div className="col-span-2"></div>
