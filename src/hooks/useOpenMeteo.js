@@ -19,7 +19,7 @@ function reducer(state, action) {
   }
 }
 
-function useOpenMeteo(coords) {
+function useOpenMeteo(coords, retry) {
   const [{ status, data, error }, dispatch] = useReducer(reducer, initialValue);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function useOpenMeteo(coords) {
     };
 
     handleFetch();
-  }, [coords]);
+  }, [coords, retry]);
 
   return { status, data, error };
 }

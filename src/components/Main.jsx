@@ -4,12 +4,14 @@ import useOpenMeteo from "../hooks/useOpenMeteo";
 
 import SearchBar from "./SearchBar";
 import Forecast from "./Forecast";
+import ErrorPage from "./ErrorPage";
 
 function Main() {
   const [coords, setCoords] = useState({ lat: 50.52, lon: 13.41 });
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [selected, setSelected] = useState(null);
+  const [retry, setRetry] = useState(0);
 
   // Detect location
   useEffect(() => {
@@ -28,8 +30,8 @@ function Main() {
   }, [query]);
 
   // Hooks
-  const { data } = useOpenMeteo(coords);
-  const { status, results } = useGeo(debouncedQuery);
+  const { status: apiResponse, data } = useOpenMeteo(coords, retry);
+  const { status, results } = useGeo(debouncedQuery, retry);
 
   // When user selects
   function handleSelect(r) {
@@ -44,6 +46,11 @@ function Main() {
     }
   }
 
+  function handleRetry(){
+    setRetry(retry + 1)
+  }
+
+  if (status === "error" || apiResponse === "error") return <ErrorPage handleRetry={handleRetry}  />;
   return (
     <div>
       <h1 className="text-6xl mt-5 font-bricolage text-center">

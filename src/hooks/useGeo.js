@@ -19,7 +19,7 @@ function reducer(state, action) {
   }
 }
 
-function useGeo(search) {
+function useGeo(search, retry) {
   const [{ status, results, error }, dispatch] = useReducer(
     reducer,
     initialValue
@@ -40,7 +40,7 @@ function useGeo(search) {
       }
     };
     searchCity();
-  }, [search]);
+  }, [search, retry]);
 
   return { status, results, error };
 }
