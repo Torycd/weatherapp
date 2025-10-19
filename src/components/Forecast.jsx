@@ -58,8 +58,8 @@ function Forecast({ data }) {
   // console.log(daily);
   console.log(data);
   return (
-    <div className="grid grid-cols-6 mt-8">
-      <div className="col-span-4 flex flex-col">
+    <div className="grid grid-cols-7 mt-8 gap-5">
+      <div className="col-span-5 flex flex-col">
         <div className="relative inline-block">
           <img
             src={svgBackground}
@@ -108,7 +108,12 @@ function Forecast({ data }) {
           </div>
         </div>
       </div>
-      <div className="col-span-2"></div>
+      <div className="col-span-2 bg-blue-900 opacity-75 rounded-lg p-3">
+        <div>
+          <h1>Hourly forecast</h1>
+          <button></button>
+        </div>
+      </div>
     </div>
   );
 }
