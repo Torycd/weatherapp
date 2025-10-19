@@ -51,7 +51,7 @@ function Forecast({ data }) {
     currentCloud,
     currentWind
   );
-  const weatherLogo = conditionToSvg[condition] || sunny;
+  const weatherLogo = conditionToSvg[condition];
   if (!data) return <p className="text-center mt-4">No forecast available</p>;
 
   // console.log(hourly);
