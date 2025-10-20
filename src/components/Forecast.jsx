@@ -109,10 +109,17 @@ function Forecast({ data }) {
         </div>
       </div>
       <div className="col-span-2 bg-blue-900 opacity-75 rounded-lg p-3">
-        <div>
+        <div className="flex justify-between">
           <h1>Hourly forecast</h1>
-          <button></button>
+          <button>
+            {new Date(daily.time[0]).toLocaleDateString("en-US", {
+              weekday: "long",
+            })}
+          </button>
         </div>
+        <ul>
+          <li></li>
+        </ul>
       </div>
     </div>
   );
