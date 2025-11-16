@@ -109,7 +109,7 @@ function Forecast({ data }) {
           </div>
         </div>
       </div>
-      <div className="col-span-2 bg-blue-900  rounded-lg p-3">
+      <div className="col-span-2 bg-blue-900 flex flex-col justify-between rounded-lg p-3">
         <div className="flex justify-between">
           <h1>Hourly forecast</h1>
           <button className="bg-neutral-300 px-4 py-2 flex rounded-md justify-between items-center gap-2 text-white">
@@ -125,11 +125,13 @@ function Forecast({ data }) {
         </div>
         <ul className="flex flex-col">
           {hourly.time.map((time, index) => {
-            const hour = new Date(time).getHours();
+            const date = new Date(time);
+            const hour = date.getHours();
+
             if (hour >= 15 && hour <= 22) {
               return (
                 <li className="bg-neutral-300 px-4 py-2 rounded-md ">
-                  {hourly.temperature_2m[index]}
+                  <span>{hourly.temperature_2m[index]}</span>
                 </li>
               );
             }
@@ -142,3 +144,30 @@ function Forecast({ data }) {
 
 export default Forecast;
 //  const hour = new Date(time).getHours()
+
+{
+  /* <ul className="flex flex-col justify-between space-y-1">
+          {hourly.time
+            .map((time, index) => ({
+              time,
+              temp: hourly.temperature_2m[index],
+              index,
+            }))
+            .filter((item) => {
+              const date = new Date(item.time);
+              const hour = date.getHours();
+              const today = new Date().toISOString().split("T")[0]; // Today's actual date
+              const itemDate = date.toISOString().split("T")[0];
+
+              return itemDate === today && hour >= 15 && hour <= 22;
+            })
+            .map((item) => (
+              <li
+                key={item.index}
+                className="bg-neutral-300 px-4 py-2 rounded-md"
+              >
+                {item.time} - {item.temp}°C
+              </li>
+            ))}
+        </ul> */
+}
