@@ -7,6 +7,7 @@ import fog from "../assets/images/icon-fog.webp";
 import overcast from "../assets/images/icon-overcast.webp";
 import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
 import storm from "../assets/images/icon-storm.webp";
+import dropdownIcon from "../assets/images/icon-dropdown.svg";
 
 function getWeatherCondition(temp, humidity, precip, cloud, wind) {
   if (precip > 10 && wind > 40) return "storm";
@@ -108,17 +109,31 @@ function Forecast({ data }) {
           </div>
         </div>
       </div>
-      <div className="col-span-2 bg-blue-900 opacity-75 rounded-lg p-3">
+      <div className="col-span-2 bg-blue-900  rounded-lg p-3">
         <div className="flex justify-between">
           <h1>Hourly forecast</h1>
-          <button>
-            {new Date(daily.time[0]).toLocaleDateString("en-US", {
-              weekday: "long",
-            })}
+          <button className="bg-neutral-300 px-4 py-2 flex rounded-md justify-between items-center gap-2 text-white">
+            <span>
+              {new Date(daily.time[0]).toLocaleDateString("en-US", {
+                weekday: "long",
+              })}
+            </span>
+            <span>
+              <img src={dropdownIcon} alt="dropdown-icon" />
+            </span>
           </button>
         </div>
-        <ul>
-          <li></li>
+        <ul className="flex flex-col">
+          {hourly.time.map((time, index) => {
+            const hour = new Date(time).getHours();
+            if (hour >= 15 && hour <= 22) {
+              return (
+                <li className="bg-neutral-300 px-4 py-2 rounded-md ">
+                  {hourly.temperature_2m[index]}
+                </li>
+              );
+            }
+          })}
         </ul>
       </div>
     </div>
@@ -126,3 +141,4 @@ function Forecast({ data }) {
 }
 
 export default Forecast;
+//  const hour = new Date(time).getHours()
