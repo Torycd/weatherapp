@@ -27,7 +27,7 @@ const SideBar = ({ daily, hourly }) => {
           </span>
         </button>
       </div>
-      <ul className="flex flex-col justify-between gap-1">
+      <ul className="flex flex-col justify-between sm:gap-4">
         {hourly.time
           .map((time, index) => {
             const date = new Date(time);
