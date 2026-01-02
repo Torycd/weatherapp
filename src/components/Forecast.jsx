@@ -52,8 +52,9 @@ function Forecast({ data }) {
   const weatherLogo = conditionToSvg[condition];
 
   return (
-    <div className="grid grid-cols-7 mt-8 gap-5">
-      <div className="col-span-5 flex flex-col">
+    <div className="grid grid-cols-7 gap-5 mt-8 items-stretch">
+      {/* MAIN PANEL */}
+      <div className="col-span-5 flex flex-col rounded-lg">
         <FirstLook
           svgBackground={svgBackground}
           data={data}
@@ -72,6 +73,7 @@ function Forecast({ data }) {
         <Daily daily={daily} conditionToSvg={conditionToSvg} />
       </div>
 
+      {/* SIDEBAR */}
       <SideBar daily={daily} hourly={hourly} />
     </div>
   );

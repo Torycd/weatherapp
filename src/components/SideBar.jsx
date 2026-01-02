@@ -1,4 +1,15 @@
+import sunny from "../assets/images/icon-sunny.webp";
+import rain from "../assets/images/icon-rain.webp";
+import drizzle from "../assets/images/icon-drizzle.webp";
+import snow from "../assets/images/icon-snow.webp";
+import fog from "../assets/images/icon-fog.webp";
+import overcast from "../assets/images/icon-overcast.webp";
+import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
+import storm from "../assets/images/icon-storm.webp";
+
 import dropdownIcon from "../assets/images/icon-dropdown.svg";
+
+import { getWeatherCondition } from "../utils/weatherCondition";
 
 const SideBar = ({ daily, hourly }) => {
   return (
@@ -21,11 +32,49 @@ const SideBar = ({ daily, hourly }) => {
           .map((time, index) => {
             const date = new Date(time);
             const hour = date.getHours();
+            const hour12 = hour % 12 || 12;
+            const period = hour >= 12 ? "PM" : "AM";
+
+            const conditionToSvg = {
+              sunny,
+              rain,
+              drizzle,
+              snow,
+              fog,
+              overcast,
+              "partly-cloudy": partlyCloudy,
+              storm,
+            };
+
+            const currentTemp = hourly.temperature_2m[index];
+            const currentHumidity = hourly.relativehumidity_2m[index];
+            const currentPrecip = hourly.precipitation[index];
+            const currentCloud = hourly.cloudcover[index];
+            const currentWind = hourly.windspeed_10m[index];
+
+            const condition = getWeatherCondition(
+              currentTemp,
+              currentHumidity,
+              currentPrecip,
+              currentCloud,
+              currentWind
+            );
+
+            const weatherLogo = conditionToSvg[condition];
 
             if (hour >= 15 && hour <= 22) {
               return (
-                <li className="bg-blue-800 opacity-90 px-4 py-2 rounded-md ">
-                  <span>{hourly.temperature_2m[index]}</span>
+                <li className="bg-blue-800 flex justify-between opacity-90 items-center px-4 py-2 rounded-md ">
+                  <div className="flex gap-2 items-center">
+                    <img src={weatherLogo} className="w-12" />
+                    <h1>
+                      {hour12} {period}
+                    </h1>
+                  </div>
+                  <span>
+                    {hourly.temperature_2m[index]}
+                    {"\u00B0"}
+                  </span>
                 </li>
               );
             }
