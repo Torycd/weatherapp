@@ -24,7 +24,7 @@ const SideBar = ({ daily, hourly }) => {
 
             if (hour >= 15 && hour <= 22) {
               return (
-                <li className="bg-neutral-300 px-4 py-2 rounded-md ">
+                <li className="bg-blue-800 opacity-90 px-4 py-2 rounded-md ">
                   <span>{hourly.temperature_2m[index]}</span>
                 </li>
               );
