@@ -10,7 +10,10 @@ const Parameter = ({
     <div className="grid grid-cols-4 gap-8 mt-4">
       <div className="col-span-1 rounded-md bg-blue-900 opacity-75 p-4">
         <h1 className="">Feels like</h1>
-        <h1 className="text-3xl">{currentTemp}</h1>
+        <h1 className="text-3xl">
+          {currentTemp}
+          {"\u00B0"}
+        </h1>
       </div>
       <div className="col-span-1 rounded-md bg-blue-900 opacity-75 p-4">
         <h1 className="">Humidity</h1>

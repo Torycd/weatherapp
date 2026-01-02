@@ -10,6 +10,7 @@ import storm from "../assets/images/icon-storm.webp";
 import Parameter from "./Parameter";
 import FirstLook from "./FirstLook";
 import SideBar from "./SideBar";
+import Daily from "./Daily";
 
 function getWeatherCondition(temp, humidity, precip, cloud, wind) {
   if (precip > 10 && wind > 40) return "storm";
@@ -76,8 +77,7 @@ function Forecast({ data }) {
           currentTemp={currentTemp}
           currentHumidity={currentHumidity}
         />
-
-        <div></div>
+        <Daily daily={daily} weatherLogo={weatherLogo} />
       </div>
       <SideBar daily={daily} hourly={hourly} />
     </div>
