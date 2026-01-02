@@ -8,6 +8,8 @@ import overcast from "../assets/images/icon-overcast.webp";
 import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
 import storm from "../assets/images/icon-storm.webp";
 import dropdownIcon from "../assets/images/icon-dropdown.svg";
+import Parameter from "./Parameter";
+import FirstLook from "./FirstLook";
 
 function getWeatherCondition(temp, humidity, precip, cloud, wind) {
   if (precip > 10 && wind > 40) return "storm";
@@ -61,53 +63,21 @@ function Forecast({ data }) {
   return (
     <div className="grid grid-cols-7 mt-8 gap-5">
       <div className="col-span-5 flex flex-col">
-        <div className="relative inline-block">
-          <img
-            src={svgBackground}
-            alt="Weather background"
-            className="w-full h-auto object-cover"
-          />
-          <div className="absolute inset-0 flex justify-between items-center p-6">
-            <div>
-              <h1 className="font-bold text-3xl">
-                {data ? data.timezone.split("/").join(", ") : "Berlin, Germany"}
-              </h1>
-              <p>
-                {new Date(daily.time[0]).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </p>
-            </div>
-            <div className="flex">
-              <img src={weatherLogo} className="w-24" alt="data" />
-              <h1 className="text-8xl ">
-                {hourly.temperature_2m[0]}
-                {"\u00B0"}
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap-8 mt-4">
-          <div className="col-span-1 rounded-md bg-blue-900 opacity-75 p-4">
-            <h1 className="">Feels like</h1>
-            <h1 className="text-3xl">{currentTemp}</h1>
-          </div>
-          <div className="col-span-1 rounded-md bg-blue-900 opacity-75 p-4">
-            <h1 className="">Humidity</h1>
-            <h1 className="text-3xl">{currentHumidity}%</h1>
-          </div>
-          <div className="col-span-1 rounded-md bg-blue-900 opacity-75 p-4">
-            <h1 className="">Wind</h1>
-            <h1 className="text-3xl">{currentWind} mph</h1>
-          </div>
-          <div className="col-span-1 rounded-md bg-blue-900 opacity-75 p-4">
-            <h1 className="">precipitation</h1>
-            <h1 className="text-3xl">{currentPrecip} in</h1>
-          </div>
-        </div>
+        <FirstLook
+          svgBackground={svgBackground}
+          data={data}
+          daily={daily}
+          weatherLogo={weatherLogo}
+          hourly={hourly}
+        />
+        <Parameter
+          currentPrecip={currentPrecip}
+          currentWind={currentWind}
+          currentTemp={currentTemp}
+          currentHumidity={currentHumidity}
+        />
+
+        <div></div>
       </div>
       <div className="col-span-2 bg-blue-900 flex flex-col justify-between rounded-lg p-3">
         <div className="flex justify-between mb-1">

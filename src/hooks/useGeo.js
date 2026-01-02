@@ -33,7 +33,6 @@ function useGeo(search, retry) {
         );
         if (!response.ok) throw new Error("Failed to fetch locations");
         const data = await response.json();
-        //   console.log(data)
         dispatch({ type: "success", payload: data.results || [] });
       } catch (error) {
         dispatch({ type: "error", payload: error.message });
