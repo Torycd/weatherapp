@@ -15,6 +15,7 @@ import SideBar from "./SideBar";
 import Daily from "./Daily";
 
 import { getWeatherCondition } from "../utils/weatherCondition";
+import useGeo from "../hooks/useGeo.js";
 
 const conditionToSvg = {
   sunny,
@@ -28,11 +29,42 @@ const conditionToSvg = {
 };
 
 function Forecast({ data }) {
-  if (!data || !data.hourly || !data.daily) {
-    return <p className="text-center mt-4">Loading forecast...</p>;
+  const { status: apiResponse } = useGeo();
+  const { hourly, daily } = data;
+
+  if (!data || !hourly || !daily) {
+    return <div className="grid grid-cols-7 gap-5 mt-8">
+      {/* MAIN PANEL */}
+      <div className="col-span-5 flex flex-col rounded-lg">
+        <FirstLook
+          stateApi={apiResponse}
+          svgBackground={svgBackground}
+          data={data}
+          daily={daily}
+          hourly={hourly}
+          weatherLogo={weatherLogo}
+        />
+
+        <Parameter
+          stateApi={apiResponse}
+          currentTemp={currentTemp}
+          currentHumidity={currentHumidity}
+          currentPrecip={currentPrecip}
+          currentWind={currentWind}
+        />
+
+        <Daily
+          stateApi={apiResponse}
+          daily={daily}
+          conditionToSvg={conditionToSvg}
+        />
+      </div>
+
+      {/* SIDEBAR */}
+      <SideBar stateApi={apiResponse} daily={daily} hourly={hourly} />
+    </div>;
   }
 
-  const { hourly, daily } = data;
   const currentHourIndex = new Date().getHours();
 
   const currentTemp = hourly.temperature_2m[currentHourIndex];
@@ -56,6 +88,7 @@ function Forecast({ data }) {
       {/* MAIN PANEL */}
       <div className="col-span-5 flex flex-col rounded-lg">
         <FirstLook
+          stateApi={apiResponse}
           svgBackground={svgBackground}
           data={data}
           daily={daily}
@@ -64,17 +97,22 @@ function Forecast({ data }) {
         />
 
         <Parameter
+          stateApi={apiResponse}
           currentTemp={currentTemp}
           currentHumidity={currentHumidity}
           currentPrecip={currentPrecip}
           currentWind={currentWind}
         />
 
-        <Daily daily={daily} conditionToSvg={conditionToSvg} />
+        <Daily
+          stateApi={apiResponse}
+          daily={daily}
+          conditionToSvg={conditionToSvg}
+        />
       </div>
 
       {/* SIDEBAR */}
-      <SideBar daily={daily} hourly={hourly} />
+      <SideBar stateApi={apiResponse} daily={daily} hourly={hourly} />
     </div>
   );
 }
