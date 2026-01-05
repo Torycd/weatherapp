@@ -30,56 +30,44 @@ const conditionToSvg = {
 
 function Forecast({ data }) {
   const { status: apiResponse } = useGeo();
-  const { hourly, daily } = data;
 
-  if (!data || !hourly || !daily) {
-    return <div className="grid grid-cols-7 gap-5 mt-8">
-      {/* MAIN PANEL */}
-      <div className="col-span-5 flex flex-col rounded-lg">
-        <FirstLook
-          stateApi={apiResponse}
-          svgBackground={svgBackground}
-          data={data}
-          daily={daily}
-          hourly={hourly}
-          weatherLogo={weatherLogo}
-        />
+  const isLoading = !data || !data.hourly || !data.daily;
 
-        <Parameter
-          stateApi={apiResponse}
-          currentTemp={currentTemp}
-          currentHumidity={currentHumidity}
-          currentPrecip={currentPrecip}
-          currentWind={currentWind}
-        />
+  const safeHourly = isLoading
+    ? {
+        temperature_2m: Array(24).fill(0),
+        relativehumidity_2m: Array(24).fill(0),
+        precipitation: Array(24).fill(0),
+        cloudcover: Array(24).fill(0),
+        windspeed_10m: Array(24).fill(0),
+      }
+    : data.hourly;
 
-        <Daily
-          stateApi={apiResponse}
-          daily={daily}
-          conditionToSvg={conditionToSvg}
-        />
-      </div>
-
-      {/* SIDEBAR */}
-      <SideBar stateApi={apiResponse} daily={daily} hourly={hourly} />
-    </div>;
-  }
+  const safeDaily = isLoading
+    ? {
+        time: [],
+        temperature_2m_max: [],
+        temperature_2m_min: [],
+      }
+    : data.daily;
 
   const currentHourIndex = new Date().getHours();
 
-  const currentTemp = hourly.temperature_2m[currentHourIndex];
-  const currentHumidity = hourly.relativehumidity_2m[currentHourIndex];
-  const currentPrecip = hourly.precipitation[currentHourIndex];
-  const currentCloud = hourly.cloudcover[currentHourIndex];
-  const currentWind = hourly.windspeed_10m[currentHourIndex];
+  const currentTemp = safeHourly.temperature_2m[currentHourIndex];
+  const currentHumidity = safeHourly.relativehumidity_2m[currentHourIndex];
+  const currentPrecip = safeHourly.precipitation[currentHourIndex];
+  const currentCloud = safeHourly.cloudcover[currentHourIndex];
+  const currentWind = safeHourly.windspeed_10m[currentHourIndex];
 
-  const condition = getWeatherCondition(
-    currentTemp,
-    currentHumidity,
-    currentPrecip,
-    currentCloud,
-    currentWind
-  );
+  const condition = isLoading
+    ? "sunny"
+    : getWeatherCondition(
+        currentTemp,
+        currentHumidity,
+        currentPrecip,
+        currentCloud,
+        currentWind
+      );
 
   const weatherLogo = conditionToSvg[condition];
 
@@ -91,9 +79,10 @@ function Forecast({ data }) {
           stateApi={apiResponse}
           svgBackground={svgBackground}
           data={data}
-          daily={daily}
-          hourly={hourly}
+          daily={safeDaily}
+          hourly={safeHourly}
           weatherLogo={weatherLogo}
+          isLoading={isLoading}
         />
 
         <Parameter
@@ -102,17 +91,24 @@ function Forecast({ data }) {
           currentHumidity={currentHumidity}
           currentPrecip={currentPrecip}
           currentWind={currentWind}
+          isLoading={isLoading}
         />
 
         <Daily
           stateApi={apiResponse}
-          daily={daily}
+          daily={safeDaily}
           conditionToSvg={conditionToSvg}
+          isLoading={isLoading}
         />
       </div>
 
       {/* SIDEBAR */}
-      <SideBar stateApi={apiResponse} daily={daily} hourly={hourly} />
+      <SideBar
+        stateApi={apiResponse}
+        daily={safeDaily}
+        hourly={safeHourly}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

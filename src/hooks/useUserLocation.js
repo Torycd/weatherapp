@@ -1,19 +1,32 @@
 import { useState, useEffect } from "react";
 
-const DEFAULTCOORDS = { lat: 52.52, lon: 13.41 };
-
 function useUserLocation() {
-  const [coords, setCoords] = useState(DEFAULTCOORDS);
+  const [coords, setCoords] = useState(null);
+  const [status, setStatus] = useState("idle");
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setCoords({
-        lat: position.coords.latitude,
-        lon: position.coords.longitude,
-      });
-    });
+    if (!navigator.geolocation) {
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoords({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
+        setStatus("success");
+      },
+      () => {
+        setStatus("error");
+      }
+    );
   }, []);
-  return { coords };
+
+  return { coords, status };
 }
 
 export default useUserLocation;
