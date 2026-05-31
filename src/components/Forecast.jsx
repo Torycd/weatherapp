@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import svgBackground from "../assets/images/bg-today-large.svg";
 
 import sunny from "../assets/images/icon-sunny.webp";
@@ -16,7 +18,6 @@ import Daily from "./Daily";
 
 import { getWeatherCondition } from "../utils/weatherCondition";
 import useGeo from "../hooks/useGeo.js";
-import { memo } from "react";
 
 const conditionToSvg = {
   sunny,

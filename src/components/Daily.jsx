@@ -10,7 +10,7 @@ const Daily = ({ daily, conditionToSvg }) => {
           const condition = getDailyCondition(
             daily.temperature_2m_max[index],
             daily.precipitation_sum[index],
-            daily.windspeed_10m_max[index]
+            daily.windspeed_10m_max[index],
           );
 
           const weatherLogo = conditionToSvg[condition];

@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import gearIcon from "../assets/images/icon-units.svg";
 import dropdownIcon from "../assets/images/icon-dropdown.svg";
 
@@ -15,4 +17,4 @@ function Units() {
   );
 }
 
-export default Units;
+export default memo(Units);
