@@ -8,7 +8,7 @@ const initialValue = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "start":
+    case "loading":
       return { ...state, isLoading: true, error: null };
     case "api/success":
       return { ...state, isLoading: false, data: action.payload, error: null };
@@ -26,8 +26,7 @@ function useOpenMeteo(coords, retry) {
   );
 
   useEffect(() => {
-    dispatch({ type: "start" });
-
+    dispatch({ type: "loading" });
     const handleFetch = async () => {
       try {
         const response = await fetch(

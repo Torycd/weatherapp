@@ -3,7 +3,15 @@ import { memo } from "react";
 import SearchIcon from "../assets/images/icon-search.svg?react";
 import SearchResultList from "./SearchResultList";
 
-function SearchBar({ query, setQuery, results, selected, onSelect, onSearch }) {
+function SearchBar({
+  query,
+  setQuery,
+  results,
+  selected,
+  onSelect,
+  onSearch,
+  isLoading,
+}) {
   return (
     <div className="flex gap-4 relative">
       {/* Input */}
@@ -19,12 +27,15 @@ function SearchBar({ query, setQuery, results, selected, onSelect, onSearch }) {
           }}
         />
       </div>
-      <button onClick={onSearch}  className="bg-blue-800 rounded-md py-2 px-4">
+      <button
+        onClick={onSearch}
+        className={`bg-blue-800 rounded-md py-2 px-4 hover:bg-blue-900 ${isLoading ? "disabled:opacity-50 cursor-not-allowed" : ""}`}
+      >
         Search
       </button>
 
       {/* Dropdown results */}
-      {results.length > 0 && query && !selected && (
+      {isLoading && results.length > 0 && query && !selected && (
         <SearchResultList results={results} onSelect={onSelect} />
       )}
     </div>

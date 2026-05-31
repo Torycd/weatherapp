@@ -29,7 +29,7 @@ function Main() {
   }, [query]);
 
   // Hooks (guarded)
-  const { data } = useOpenMeteo(coords, retry);
+  const { data, isLoading } = useOpenMeteo(coords, retry);
   const { error, results } = useGeo(debouncedQuery, retry);
 
   function handleSelect(r) {
@@ -63,12 +63,13 @@ function Main() {
           setQuery={setQuery}
           results={results}
           selected={selected}
+          isLoading={isLoading}
           onSelect={handleSelect}
           onSearch={handleSearch}
         />
       </div>
 
-      <Forecast data={data} isCoordsReady={!!coords} />
+      <Forecast data={data} isCoordsReady={!!coords} isLoading={isLoading} />
     </div>
   );
 }
