@@ -1,4 +1,6 @@
-function SearchResultList({ results, onSelect }) {
+import { memo } from "react";
+
+const SearchResultList = ({ results, onSelect }) => {
   return (
     <ul className="absolute top-12 left-0 min-w-[400px] bg-blue-900 rounded-md shadow-lg max-h-60 overflow-y-auto z-10">
       {results.map((r) => (
@@ -15,6 +17,6 @@ function SearchResultList({ results, onSelect }) {
       ))}
     </ul>
   );
-}
+};
 
-export default SearchResultList;
+export default memo(SearchResultList);

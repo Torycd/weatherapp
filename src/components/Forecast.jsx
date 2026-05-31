@@ -16,6 +16,7 @@ import Daily from "./Daily";
 
 import { getWeatherCondition } from "../utils/weatherCondition";
 import useGeo from "../hooks/useGeo.js";
+import { memo } from "react";
 
 const conditionToSvg = {
   sunny,
@@ -66,7 +67,7 @@ function Forecast({ data }) {
         currentHumidity,
         currentPrecip,
         currentCloud,
-        currentWind
+        currentWind,
       );
 
   const weatherLogo = conditionToSvg[condition];
@@ -113,4 +114,4 @@ function Forecast({ data }) {
   );
 }
 
-export default Forecast;
+export default memo(Forecast);

@@ -1,47 +1,54 @@
 import { useEffect, useReducer } from "react";
 
 const initialValue = {
-  status: "",
+  isLoading: false,
   results: [],
   error: null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case "start":
-      return { ...state, status: "loading", error: null };
-    case "success":
-      return { status: "success", results: action.payload, error: null };
-    case "error":
-      return { ...state, status: "error", error: action.payload };
+    case "loading":
+      return { ...state, isLoading: true, error: null };
+    case "api/success":
+      return {
+        ...state,
+        isLoading: false,
+        status: "success",
+        results: action.payload,
+        error: null,
+      };
+    case "api/error":
+      return { ...state, isLoading: false, error: action.payload };
     default:
       return state;
   }
 }
 
 function useGeo(search, retry) {
-  const [{ status, results, error }, dispatch] = useReducer(
+  const [{ isLoading, results, error }, dispatch] = useReducer(
     reducer,
-    initialValue
+    initialValue,
   );
   useEffect(() => {
     const searchCity = async () => {
-      dispatch({ type: "start" });
+      dispatch({ type: "loading" });
       try {
         const response = await fetch(
-          `https://geocoding-api.open-meteo.com/v1/search?name=${search}&count=10&language=en&format=json`
+          `https://geocoding-api.open-meteo.com/v1/search?name=${search}&count=10&language=en&format=json`,
         );
         if (!response.ok) throw new Error("Failed to fetch locations");
+
         const data = await response.json();
-        dispatch({ type: "success", payload: data.results || [] });
+        dispatch({ type: "api/success", payload: data.results || [] });
       } catch (error) {
-        dispatch({ type: "error", payload: error.message });
+        dispatch({ type: "api/error", payload: error.message });
       }
     };
     searchCity();
   }, [search, retry]);
 
-  return { status, results, error };
+  return { isLoading, results, error };
 }
 
 export default useGeo;

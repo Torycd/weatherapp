@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import useGeo from "../hooks/useGeo";
 import useOpenMeteo from "../hooks/useOpenMeteo";
 import useUserLocation from "../hooks/useUserLocation";
@@ -29,8 +29,8 @@ function Main() {
   }, [query]);
 
   // Hooks (guarded)
-  const { status: apiResponse, data } = useOpenMeteo(coords, retry);
-  const { status, results } = useGeo(debouncedQuery, retry);
+  const { data } = useOpenMeteo(coords, retry);
+  const { error, results } = useGeo(debouncedQuery, retry);
 
   function handleSelect(r) {
     setSelected(r);
@@ -47,7 +47,7 @@ function Main() {
     setRetry((r) => r + 1);
   }
 
-  if (status === "error") {
+  if (error) {
     return <ErrorPage handleRetry={handleRetry} />;
   }
 
@@ -62,7 +62,6 @@ function Main() {
           query={query}
           setQuery={setQuery}
           results={results}
-          status={status}
           selected={selected}
           onSelect={handleSelect}
           onSearch={handleSearch}
@@ -74,4 +73,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default memo(Main);

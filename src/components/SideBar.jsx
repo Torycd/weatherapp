@@ -9,6 +9,7 @@ import storm from "../assets/images/icon-storm.webp";
 import dropdownIcon from "../assets/images/icon-dropdown.svg";
 
 import { getWeatherCondition } from "../utils/weatherCondition";
+import { memo } from "react";
 
 const conditionToSvg = {
   sunny,
@@ -74,7 +75,7 @@ const SideBar = ({ daily, hourly, isLoading }) => {
               hourly.relativehumidity_2m[index],
               hourly.precipitation[index],
               hourly.cloudcover[index],
-              hourly.windspeed_10m[index]
+              hourly.windspeed_10m[index],
             );
 
             const weatherLogo = conditionToSvg[condition];
@@ -104,4 +105,4 @@ const SideBar = ({ daily, hourly, isLoading }) => {
   );
 };
 
-export default SideBar;
+export default memo(SideBar);
