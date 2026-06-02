@@ -8,39 +8,30 @@ import Forecast from "./Forecast";
 import ErrorPage from "./ErrorPage";
 
 function Main() {
-  const [coords, setCoords] = useState(null);
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [selected, setSelected] = useState(null);
   const [retry, setRetry] = useState(0);
 
-  // User location
-  const { coords: userCoords } = useUserLocation();
+  const { coords: userCoords, status } = useUserLocation();
 
-  // When geolocation resolves
-  useEffect(() => {
-    if (userCoords) setCoords(userCoords);
-  }, [userCoords]);
-
-  // Debounce
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
     return () => clearTimeout(handler);
   }, [query]);
 
-  // Hooks (guarded)
+  // FINAL COORDS LOGIC
+  const coords = selected ?? userCoords;
+
   const { data, isLoading } = useOpenMeteo(coords, retry);
   const { error, results } = useGeo(debouncedQuery, retry);
 
   function handleSelect(r) {
-    setSelected(r);
-    if (r) setQuery(r.name);
-  }
-
-  function handleSearch() {
-    if (selected) {
-      setCoords({ lat: selected.latitude, lon: selected.longitude });
-    }
+    setSelected({
+      lat: r.latitude,
+      lon: r.longitude,
+    });
+    setQuery(r.name);
   }
 
   function handleRetry() {
@@ -49,6 +40,15 @@ function Main() {
 
   if (error) {
     return <ErrorPage handleRetry={handleRetry} />;
+  }
+
+  // 🔥 IMPORTANT: wait for location first
+  if (!coords) {
+    return (
+      <div className="text-center mt-10 text-xl">
+        Detecting your location...
+      </div>
+    );
   }
 
   return (
@@ -65,11 +65,10 @@ function Main() {
           selected={selected}
           isLoading={isLoading}
           onSelect={handleSelect}
-          onSearch={handleSearch}
         />
       </div>
 
-      <Forecast data={data} isCoordsReady={!!coords} isLoading={isLoading} />
+      {<Forecast data={data} isLoading={isLoading} />}
     </div>
   );
 }

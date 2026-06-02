@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 
 function useUserLocation() {
   const [coords, setCoords] = useState(null);
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("loading");
 
   useEffect(() => {
     if (!navigator.geolocation) {
       setStatus("error");
       return;
     }
-
-    setStatus("loading");
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -20,9 +18,10 @@ function useUserLocation() {
         });
         setStatus("success");
       },
-      () => {
+      (err) => {
+        console.error(err);
         setStatus("error");
-      }
+      },
     );
   }, []);
 

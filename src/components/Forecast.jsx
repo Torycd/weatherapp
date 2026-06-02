@@ -17,7 +17,7 @@ import SideBar from "./SideBar";
 import Daily from "./Daily";
 
 import { getWeatherCondition } from "../utils/weatherCondition";
-import useGeo from "../hooks/useGeo.js";
+// import useGeo from "../hooks/useGeo.js";
 
 const conditionToSvg = {
   sunny,
@@ -30,10 +30,10 @@ const conditionToSvg = {
   storm,
 };
 
-function Forecast({ data }) {
-  const { status: apiResponse } = useGeo();
+function Forecast({ data, isLoading }) {
+  // const { isLoading } = useGeo();
 
-  const isLoading = !data || !data.hourly || !data.daily;
+  // const isLoading = !data || !data.hourly || !data.daily;
 
   const safeHourly = isLoading
     ? {
@@ -78,7 +78,6 @@ function Forecast({ data }) {
       {/* MAIN PANEL */}
       <div className="col-span-5 flex flex-col rounded-lg">
         <FirstLook
-          stateApi={apiResponse}
           svgBackground={svgBackground}
           data={data}
           daily={safeDaily}
@@ -88,7 +87,6 @@ function Forecast({ data }) {
         />
 
         <Parameter
-          stateApi={apiResponse}
           currentTemp={currentTemp}
           currentHumidity={currentHumidity}
           currentPrecip={currentPrecip}
@@ -97,7 +95,6 @@ function Forecast({ data }) {
         />
 
         <Daily
-          stateApi={apiResponse}
           daily={safeDaily}
           conditionToSvg={conditionToSvg}
           isLoading={isLoading}
@@ -105,12 +102,7 @@ function Forecast({ data }) {
       </div>
 
       {/* SIDEBAR */}
-      <SideBar
-        stateApi={apiResponse}
-        daily={safeDaily}
-        hourly={safeHourly}
-        isLoading={isLoading}
-      />
+      <SideBar daily={safeDaily} hourly={safeHourly} isLoading={isLoading} />
     </div>
   );
 }

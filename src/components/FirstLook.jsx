@@ -14,7 +14,7 @@ const FirstLook = ({
         className="w-full h-auto object-cover"
       />
       {isLoading ? (
-        <div className="absolute inset-0 flex justify-between items-center p-6">
+        <div className="absolute inset-0 flex justify-between align-middle items-center p-6">
           <h1>Loading...</h1>
         </div>
       ) : (
