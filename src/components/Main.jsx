@@ -18,7 +18,6 @@ function Main() {
 
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
-    // setSelected(null);
     return () => clearTimeout(handler);
   }, [query]);
 
@@ -40,7 +39,10 @@ function Main() {
     });
     setQuery("");
   }
-
+  function HandleSearch() {
+    
+  }
+  // Changes to retry the API
   function handleRetry() {
     setRetry((r) => r + 1);
   }
@@ -60,7 +62,7 @@ function Main() {
 
       <div className="flex justify-center mt-4">
         <SearchBar
-          // search={onSearch}
+          onSearch={HandleSearch}
           query={query}
           setQuery={setQuery}
           results={results}
