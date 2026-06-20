@@ -17,7 +17,6 @@ import SideBar from "./SideBar";
 import Daily from "./Daily";
 
 import { getWeatherCondition } from "../utils/weatherCondition";
-// import useGeo from "../hooks/useGeo.js";
 
 const conditionToSvg = {
   sunny,
@@ -31,10 +30,6 @@ const conditionToSvg = {
 };
 
 function Forecast({ data, isLoading }) {
-  // const { isLoading } = useGeo();
-
-  // const isLoading = !data || !data.hourly || !data.daily;
-
   const safeHourly = isLoading
     ? {
         temperature_2m: Array(24).fill(0),
@@ -85,7 +80,6 @@ function Forecast({ data, isLoading }) {
           weatherLogo={weatherLogo}
           isLoading={isLoading}
         />
-
         <Parameter
           currentTemp={currentTemp}
           currentHumidity={currentHumidity}
@@ -93,14 +87,12 @@ function Forecast({ data, isLoading }) {
           currentWind={currentWind}
           isLoading={isLoading}
         />
-
         <Daily
           daily={safeDaily}
           conditionToSvg={conditionToSvg}
           isLoading={isLoading}
         />
       </div>
-
       {/* SIDEBAR */}
       <SideBar daily={safeDaily} hourly={safeHourly} isLoading={isLoading} />
     </div>

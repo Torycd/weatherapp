@@ -6,6 +6,7 @@ import useUserLocation from "../hooks/useUserLocation";
 import SearchBar from "./SearchBar";
 import Forecast from "./Forecast";
 import ErrorPage from "./ErrorPage";
+import Spinner from "./features/Spinner";
 
 function Main() {
   const [query, setQuery] = useState("");
@@ -23,10 +24,8 @@ function Main() {
   // FINAL COORDS LOGIC
   const coords = selected ?? userCoords;
   console.log(coords);
-
   const { data, isLoading } = useOpenMeteo(coords, retry);
   const { error, results } = useGeo(debouncedQuery, retry);
-
   console.log(data);
 
   function handleSelect(r) {
@@ -36,22 +35,15 @@ function Main() {
     });
     setQuery(r.name);
   }
-
   function handleRetry() {
     setRetry((r) => r + 1);
   }
-
   if (error) {
     return <ErrorPage handleRetry={handleRetry} />;
   }
-
   // IMPORTANT: wait for location first
   if (!coords) {
-    return (
-      <div className="text-center mt-10 text-xl">
-        Detecting your location...
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

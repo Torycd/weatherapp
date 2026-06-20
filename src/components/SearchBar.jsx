@@ -12,6 +12,7 @@ function SearchBar({
   onSearch,
   isLoading,
 }) {
+  console.log(isLoading);
   return (
     <div className="flex gap-4 relative">
       {/* Input */}
@@ -35,7 +36,7 @@ function SearchBar({
       </button>
 
       {/* Dropdown results */}
-      {isLoading && results.length > 0 && query && !selected && (
+      {results.length > 0 && query && !selected && (
         <SearchResultList results={results} onSelect={onSelect} />
       )}
     </div>

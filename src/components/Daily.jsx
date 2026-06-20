@@ -29,8 +29,8 @@ const Daily = ({ daily, conditionToSvg }) => {
               <img src={weatherLogo} alt={condition} className="w-24 mx-auto" />
 
               <div className="flex justify-between text-[10px] mt-2">
-                <span>{daily.temperature_2m_max[index]}°</span>
-                <span>{daily.temperature_2m_min[index]}°</span>
+                <span>{daily.temperature_2m_max[index]}°C</span>
+                <span>{daily.temperature_2m_min[index]}°C</span>
               </div>
             </li>
           );
