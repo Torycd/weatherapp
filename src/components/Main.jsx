@@ -13,7 +13,7 @@ function Main() {
   const [selected, setSelected] = useState(null);
   const [retry, setRetry] = useState(0);
 
-  const { coords: userCoords, status } = useUserLocation();
+  const { coords: userCoords } = useUserLocation();
 
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
@@ -22,9 +22,12 @@ function Main() {
 
   // FINAL COORDS LOGIC
   const coords = selected ?? userCoords;
+  console.log(coords);
 
   const { data, isLoading } = useOpenMeteo(coords, retry);
   const { error, results } = useGeo(debouncedQuery, retry);
+
+  console.log(data);
 
   function handleSelect(r) {
     setSelected({
@@ -42,7 +45,7 @@ function Main() {
     return <ErrorPage handleRetry={handleRetry} />;
   }
 
-  // 🔥 IMPORTANT: wait for location first
+  // IMPORTANT: wait for location first
   if (!coords) {
     return (
       <div className="text-center mt-10 text-xl">
@@ -67,8 +70,7 @@ function Main() {
           onSelect={handleSelect}
         />
       </div>
-
-      {<Forecast data={data} isLoading={isLoading} />}
+      {data && <Forecast data={data} isLoading={isLoading} />}
     </div>
   );
 }
