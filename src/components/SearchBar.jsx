@@ -10,9 +10,8 @@ function SearchBar({
   selected,
   onSelect,
   onSearch,
-  isLoading,
+  isLoadingGeo,
 }) {
-  console.log(isLoading);
   return (
     <div className="flex gap-4 relative">
       {/* Input */}
@@ -24,19 +23,18 @@ function SearchBar({
           className="py-2 px-4 outline-none bg-transparent w-full"
           onChange={(e) => {
             setQuery(e.target.value);
-            onSelect(null); // reset selection when typing
           }}
         />
       </div>
       <button
         onClick={onSearch}
-        className={`bg-blue-800 rounded-md py-2 px-4 hover:bg-blue-900 ${isLoading ? "disabled:opacity-50 cursor-not-allowed" : ""}`}
+        className={`bg-blue-800 rounded-md py-2 px-4 hover:bg-blue-900 ${isLoadingGeo ? "disabled:opacity-50 cursor-not-allowed" : ""}`}
       >
         Search
       </button>
 
       {/* Dropdown results */}
-      {results.length > 0 && query && !selected && (
+      {results.length > 0 && query && (
         <SearchResultList results={results} onSelect={onSelect} />
       )}
     </div>

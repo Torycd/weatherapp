@@ -18,6 +18,7 @@ function Main() {
 
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedQuery(query), 500);
+    // setSelected(null);
     return () => clearTimeout(handler);
   }, [query]);
 
@@ -25,16 +26,21 @@ function Main() {
   const coords = selected ?? userCoords;
   console.log(coords);
   const { data, isLoading } = useOpenMeteo(coords, retry);
-  const { error, results } = useGeo(debouncedQuery, retry);
-  console.log(data);
+  const {
+    error,
+    results,
+    isLoading: isLoadingGeo,
+  } = useGeo(debouncedQuery, retry);
 
   function handleSelect(r) {
+    setQuery(r.name);
     setSelected({
       lat: r.latitude,
       lon: r.longitude,
     });
-    setQuery(r.name);
+    setQuery("");
   }
+
   function handleRetry() {
     setRetry((r) => r + 1);
   }
@@ -54,11 +60,12 @@ function Main() {
 
       <div className="flex justify-center mt-4">
         <SearchBar
+          // search={onSearch}
           query={query}
           setQuery={setQuery}
           results={results}
           selected={selected}
-          isLoading={isLoading}
+          isLoadingGeo={isLoadingGeo}
           onSelect={handleSelect}
         />
       </div>

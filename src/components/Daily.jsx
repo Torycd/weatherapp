@@ -25,9 +25,7 @@ const Daily = ({ daily, conditionToSvg }) => {
                   weekday: "short",
                 })}
               </h1>
-
               <img src={weatherLogo} alt={condition} className="w-24 mx-auto" />
-
               <div className="flex justify-between text-[10px] mt-2">
                 <span>{daily.temperature_2m_max[index]}°C</span>
                 <span>{daily.temperature_2m_min[index]}°C</span>
