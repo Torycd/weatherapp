@@ -71,7 +71,7 @@ function Forecast({ data, isLoading }) {
   return (
     <div className="grid grid-cols-7 gap-5 mt-8">
       {/* MAIN PANEL */}
-      <div className="col-span-5 flex flex-col rounded-lg">
+      <div className="col-span-5 flex flex-col justify-between rounded-lg">
         <FirstLook
           svgBackground={svgBackground}
           data={data}

@@ -30,7 +30,6 @@ const SideBar = ({ daily, hourly, isLoading }) => {
     <div className="col-span-2 bg-blue-900 flex flex-col justify-between rounded-lg p-3">
       <div className="flex justify-between mb-1">
         <h1>Hourly forecast</h1>
-
         <button className="bg-neutral-300 px-4 py-2 flex rounded-md justify-between items-center gap-2 text-white">
           <span>
             {isLoading
@@ -43,7 +42,7 @@ const SideBar = ({ daily, hourly, isLoading }) => {
         </button>
       </div>
 
-      <ul className="flex flex-col justify-between sm:gap-4">
+      <ul className="flex flex-col justify-between sm:gap-2">
         {hoursToRender
           .map((time, index) => {
             // ✅ LOADING: STRINGS ONLY
@@ -83,7 +82,7 @@ const SideBar = ({ daily, hourly, isLoading }) => {
             return (
               <li
                 key={index}
-                className="bg-blue-800 flex justify-between opacity-90 items-center px-4 py-2 rounded-md"
+                className="bg-blue-800 flex justify-between opacity-90 items-center px-2 py-1 rounded-md"
               >
                 <div className="flex gap-2 items-center">
                   <img src={weatherLogo} className="w-12" alt={condition} />

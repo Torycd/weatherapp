@@ -56,7 +56,7 @@ function Main() {
 
   return (
     <div>
-      <h1 className="text-6xl mt-5 font-bricolage text-center">
+      <h1 className="text-5xl mt-2 font-bricolage text-center">
         How is the sky looking today?
       </h1>
 
@@ -77,3 +77,4 @@ function Main() {
 }
 
 export default memo(Main);
+

@@ -11,14 +11,14 @@ const FirstLook = ({
       <img
         src={svgBackground}
         alt="Weather background"
-        className="w-full h-auto object-cover"
+        className="w-full h-[250px] rounded-lg object-cover"
       />
       {isLoading ? (
         <div className="absolute inset-0 flex justify-between align-middle items-center p-6">
           <h1>Loading...</h1>
         </div>
       ) : (
-        <div className="absolute inset-0 flex justify-between items-center p-6">
+        <div className="absolute inset-0 flex justify-between items-center p-3">
           <div>
             <h1 className="font-bold text-3xl">
               {data ? data.timezone.split("/").join(", ") : "- -"}
