@@ -9,8 +9,9 @@ const SearchResultList = ({ results, onSelect }) => {
           onClick={() => onSelect(r)}
           className="px-4 py-2 hover:bg-blue-700 cursor-pointer"
         >
-          {r.name}, {r.country}{" "}
+          {r.name}, {r.country}
           <span className="text-sm opacity-70">
+            {" "}
             ({r.latitude.toFixed(2)}, {r.longitude.toFixed(2)})
           </span>
         </li>

@@ -13,26 +13,25 @@ function SearchBar({
 }) {
   return (
     <div className="flex gap-4 relative">
-      {/* Input */}
-      <div className="bg-blue-900 opacity-75 rounded-md flex min-w-[400px] items-center px-3 ">
+      <div className="bg-blue-900 opacity-75 rounded-md flex min-w-[400px] items-center px-3">
         <SearchIcon className="w-6 h-6" />
+
         <input
           value={query}
           placeholder="Search for a place..."
           className="py-2 px-4 outline-none bg-transparent w-full"
-          onChange={(e) => {
-            setQuery(e.target.value);
-          }}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
+
       <button
         onClick={onSearch}
-        className={`bg-blue-800 rounded-md py-2 px-4 hover:bg-blue-900 ${isLoadingGeo ? "disabled:opacity-50 cursor-not-allowed" : ""}`}
+        disabled={!query || isLoadingGeo}
+        className="bg-blue-800 rounded-md py-2 px-4 hover:bg-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Search
       </button>
 
-      {/* Dropdown results */}
       {results.length > 0 && query && (
         <SearchResultList results={results} onSelect={onSelect} />
       )}

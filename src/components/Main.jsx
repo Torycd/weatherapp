@@ -11,19 +11,20 @@ import Spinner from "./features/Spinner";
 function Main() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [selected, setSelected] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [forecastCoords, setForecastCoords] = useState(null);
   const [retry, setRetry] = useState(0);
 
   const { coords: userCoords } = useUserLocation();
 
   useEffect(() => {
-    const handler = setTimeout(() => setDebouncedQuery(query), 500);
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 500);
     return () => clearTimeout(handler);
   }, [query]);
-
-  // FINAL COORDS LOGIC
-  const coords = selected ?? userCoords;
-  console.log(coords);
+  
+  const coords = forecastCoords ?? userCoords;
   const { data, isLoading } = useOpenMeteo(coords, retry);
   const {
     error,
@@ -31,25 +32,30 @@ function Main() {
     isLoading: isLoadingGeo,
   } = useGeo(debouncedQuery, retry);
 
-  function handleSelect(r) {
-    setQuery(r.name);
-    setSelected({
-      lat: r.latitude,
-      lon: r.longitude,
+  function handleSelect(place) {
+    setQuery(place.name);
+    setSelectedPlace({
+      lat: place.latitude,
+      lon: place.longitude,
     });
+    setDebouncedQuery("");
+  }
+
+  function handleSearch() {
+    if (!selectedPlace) return;
+    setForecastCoords(selectedPlace);
     setQuery("");
+    setDebouncedQuery("");
   }
-  function HandleSearch() {
-    
-  }
-  // Changes to retry the API
+
   function handleRetry() {
     setRetry((r) => r + 1);
   }
+
   if (error) {
     return <ErrorPage handleRetry={handleRetry} />;
   }
-  // IMPORTANT: wait for location first
+
   if (!coords) {
     return <Spinner />;
   }
@@ -62,19 +68,18 @@ function Main() {
 
       <div className="flex justify-center mt-4">
         <SearchBar
-          onSearch={HandleSearch}
           query={query}
           setQuery={setQuery}
           results={results}
-          selected={selected}
-          isLoadingGeo={isLoadingGeo}
           onSelect={handleSelect}
+          onSearch={handleSearch}
+          isLoadingGeo={isLoadingGeo}
         />
       </div>
+
       {data && <Forecast data={data} isLoading={isLoading} />}
     </div>
   );
 }
 
 export default memo(Main);
-

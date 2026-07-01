@@ -2,7 +2,7 @@ import { getDailyCondition } from "../utils/weatherCondition";
 
 const Daily = ({ daily, conditionToSvg }) => {
   return (
-    <div className="mt-5">
+    <div className="mt-3">
       <h1 className="font-bold mb-3">Daily Forecast</h1>
 
       <ul className="flex justify-between gap-4">
@@ -12,21 +12,20 @@ const Daily = ({ daily, conditionToSvg }) => {
             daily.precipitation_sum[index],
             daily.windspeed_10m_max[index],
           );
-
           const weatherLogo = conditionToSvg[condition];
 
           return (
             <li
               key={time}
-              className="rounded-md bg-blue-900 opacity-75 p-4 flex flex-col justify-between"
+              className="rounded-md bg-blue-900 opacity-75 p-3 flex flex-col justify-between"
             >
-              <h1 className="text-center mb-2">
+              <h1 className="text-center mb-1">
                 {new Date(time).toLocaleDateString("en-US", {
                   weekday: "short",
                 })}
               </h1>
-              <img src={weatherLogo} alt={condition} className="w-24 mx-auto" />
-              <div className="flex justify-between text-[10px] mt-2">
+              <img src={weatherLogo} alt={condition} className="w-20 mx-auto" />
+              <div className="flex justify-between text-[10px] mt-1">
                 <span>{daily.temperature_2m_max[index]}°C</span>
                 <span>{daily.temperature_2m_min[index]}°C</span>
               </div>
